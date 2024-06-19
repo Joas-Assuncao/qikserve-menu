@@ -1,9 +1,108 @@
+'use client';
+
 import { Accordion } from '@/components/Accordion';
 import { Input } from '@/components/Input';
+import { NavItems } from '@/components/NavItems';
 import Image from 'next/image';
+import { useRef, useState } from 'react';
+
+export interface Image {
+  id: number;
+  image: string;
+}
+
+export interface ModifierItem {
+  id: number;
+  name: string;
+  price: number;
+  maxChoices: number;
+  position: number;
+  visible: number;
+  availabilityType: string;
+  qty?: number;
+  available: boolean;
+}
+
+export interface Modifier {
+  id: number;
+  name: string;
+  minChoices: number;
+  maxChoices: number;
+  items: ModifierItem[];
+}
+
+export interface Item {
+  id: number;
+  name: string;
+  description?: string;
+  alcoholic: number;
+  price: number;
+  position: number;
+  visible?: number;
+  availabilityType: string;
+  sku?: string;
+  modifiers?: Modifier[];
+  images?: Image[];
+  available: boolean;
+}
+
+export interface Section {
+  id: number;
+  name: string;
+  description?: string | null;
+  position: number;
+  visible?: number;
+  images: Image[];
+  items: Item[];
+}
+
+export interface Menu {
+  id: number;
+  name: string;
+  type: string;
+  collapse: number;
+  sections: Section[];
+}
+
+export interface BurgerRestaurant {
+  id: number;
+  name: string;
+  internalName: string;
+  description?: string | null;
+  liveFlag: number;
+  demoFlag: number;
+  address1: string;
+  address2: string;
+  address3?: string | null;
+  city: string;
+  county: string;
+  postcode: string;
+  country: string;
+  timezoneOffset: string;
+  locale: string;
+  timeZone: string;
+  webSettings: WebSettings;
+  ccy: string;
+  ccySymbol: string;
+  currency: string;
+}
+
+interface WebSettings {
+  id: number;
+  venueId: number;
+  bannerImage: string;
+  backgroundColour: string;
+  primaryColour: string;
+  primaryColourHover: string;
+  navBackgroundColour: string;
+}
 
 export default function Page() {
-  const data = {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  const [accordionId, setAccordionId] = useState(0);
+
+  const data: Menu = {
     "id": 14730,
     "name": "FE TEST",
     "type": "MENU",
@@ -206,15 +305,54 @@ export default function Page() {
     ]
   }
 
+  const dataRestaurant: BurgerRestaurant = {
+    "id": 7602,
+    "name": "BURGERS RESTAURANT",
+    "internalName": "BURGERS RESTAURANT",
+    "description": null,
+    "liveFlag": 1,
+    "demoFlag": 1,
+    "address1": "Rua XX-X, 1-11",
+    "address2": "XXX",
+    "address3": null,
+    "city": "Bauru",
+    "county": "BR",
+    "postcode": "17012-360",
+    "country": "BR",
+    "timezoneOffset": "-03:00",
+    "locale": "pt-BR",
+    "timeZone": "America/Sao_Paulo",
+    "webSettings": {
+      "id": 5854,
+      "venueId": 7602,
+      "bannerImage": "https://preodemo.gumlet.io/usr/venue/7602/web/646fbf3abf9d0.png",
+      "backgroundColour": "#ffffff",
+      "primaryColour": "#4f372f",
+      "primaryColourHover": "#4f372f",
+      "navBackgroundColour": "#4f372f"
+    },
+    "ccy": "BRL",
+    "ccySymbol": "R$",
+    "currency": "R$"
+  }
+
   return (
     <>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-4 pb-8'>
         <Image className="min-w-full object-cover md:h-44 lg:h-48 min-h-36" src='https://preodemo.gumlet.io/usr/venue/7602/web/646fbf3abf9d0.png' alt='Banner img' width={2000} height={100} />
         <div className='px-4'>
           <Input placeholder='Search menu items' />
         </div>
 
-        <Accordion />
+        <NavItems
+          sections={data.sections}
+          bg={dataRestaurant.webSettings.navBackgroundColour}
+          id={accordionId}
+        />
+
+        {data.sections.map((section) => (
+          <Accordion setAccordionId={setAccordionId} ref={ref} key={section.id} id={section.id} title={section.name} data={section.items} />
+        ))}
       </div>
     </>
   );

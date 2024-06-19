@@ -1,3 +1,6 @@
+import { Button } from '@/components/Button';
+import { VenueData } from './interfaces';
+
 interface DetailsProps {
   params: { slug: string; }
 }
@@ -10,7 +13,7 @@ export default async function Details({ params }: DetailsProps) {
       throw new Error('Network response was not ok');
     }
 
-    const data = await response.json();
+    const data: VenueData = await response.json();
 
     console.log(data);
 
@@ -45,9 +48,7 @@ export default async function Details({ params }: DetailsProps) {
                 <span className="mx-3">1</span>
                 <button className="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full">+</button>
               </div>
-              <button className="bg-red-600 text-white font-bold py-2 px-6 rounded hover:bg-red-700">
-                Add to Order • {data.ccySymbol}11.75
-              </button>
+              <Button children={`Add to order `} bg='' />
             </div>
           </div>
         </div>
