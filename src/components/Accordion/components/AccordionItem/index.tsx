@@ -1,13 +1,16 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Item } from '@/app/page';
+import { ModalItem } from '@/components/Modal/ModalItem';
 
 const MAX_DESCRIPTION_LENGTH = 60;
 
 export function AccordionItem({ data, isOpen }: { data: Item; isOpen: boolean; }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const formatPrice = useMemo(() => {
     const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
     return currency.format(data.price);
@@ -18,6 +21,7 @@ export function AccordionItem({ data, isOpen }: { data: Item; isOpen: boolean; }
       {
         isOpen && (<div
           className={`flex flex-row justify-between items-center gap-4`}
+          onClick={() => setIsModalOpen(true)}
         >
           <div className='flex flex-col text-left'>
             <strong className='font-bold'>{data.name}</strong>
@@ -40,6 +44,7 @@ export function AccordionItem({ data, isOpen }: { data: Item; isOpen: boolean; }
             </div>}
         </div>)
       }
+      <ModalItem item={data} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </>
   );
 }

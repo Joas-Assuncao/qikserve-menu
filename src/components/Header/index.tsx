@@ -2,7 +2,7 @@
 import { useMemo, useState } from 'react';
 import { BurguerIcon } from '../../public/icons/BurguerIcon';
 import { LinkList } from './components/LinkList';
-import { ModalMenu } from './components/ModalMenu';
+import { ModalMenu } from '../Modal/ModalMenu';
 
 interface HeaderProps {
   bg: string;
@@ -10,14 +10,6 @@ interface HeaderProps {
 
 export function Header({ bg }: HeaderProps) {
   const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const className = useMemo(() => {
-    if (!isNavOpen) {
-      return 'hidden';
-    }
-
-    return 'block absolute w-full h-screen top-0 left-0 bg-white z-10 flex flex-col justify-evenly items-center';
-  }, [isNavOpen]);
 
   return (
     <header className={`flex items-center justify-center relative px-2`} style={{ background: bg }}>
@@ -31,7 +23,7 @@ export function Header({ bg }: HeaderProps) {
             <BurguerIcon />
           </div>
 
-          <ModalMenu className={className} bg={bg} setIsNavOpen={setIsNavOpen} />
+          <ModalMenu isModalOpen={isNavOpen} bg={bg} setIsNavOpen={setIsNavOpen} />
         </section>
       </nav>
       <LinkList />
