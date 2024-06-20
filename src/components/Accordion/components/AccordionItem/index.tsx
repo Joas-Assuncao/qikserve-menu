@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
-import { Item } from '@/app/page';
 import { ModalItem } from '@/components/Modal/ModalItem';
+import { IItem } from '@/services/interfaces';
 
 const MAX_DESCRIPTION_LENGTH = 60;
 
-export function AccordionItem({ data, isOpen }: { data: Item; isOpen: boolean; }) {
+export function AccordionItem({ data, isOpen }: { data: IItem; isOpen: boolean; }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const formatPrice = useMemo(() => {

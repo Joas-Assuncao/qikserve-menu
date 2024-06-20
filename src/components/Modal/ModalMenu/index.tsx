@@ -1,4 +1,3 @@
-import { CloseIcon } from '@/public/icons/CloseIcon';
 import { Modal } from '..';
 
 interface ModalMenuProps {

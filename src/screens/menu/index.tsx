@@ -1,0 +1,44 @@
+'use client';
+
+import Image from 'next/image';
+import { useState } from 'react';
+
+import { Accordion } from '@/components/Accordion';
+import { Input } from '@/components/Input';
+import { NavItems } from '@/components/NavItems';
+import { IBurgerRestaurant, IMenu } from '@/services/interfaces';
+
+interface IMenuPageProps {
+  dataMenu: IMenu;
+  dataRestaurant: IBurgerRestaurant;
+}
+
+export function Menu({ dataMenu, dataRestaurant }: IMenuPageProps) {
+  // const ref = useRef<HTMLDivElement | null>(null);
+
+  const [accordionId, setAccordionId] = useState(0);
+
+  return (
+    <>
+      <div className='flex flex-col gap-4 pb-8'>
+        <Image className="min-w-full object-cover md:h-44 lg:h-48 min-h-36" src='https://preodemo.gumlet.io/usr/venue/7602/web/646fbf3abf9d0.png' alt='Banner img' width={2000} height={100} />
+        <div className='px-4'>
+          <Input placeholder='Search menu items' />
+        </div>
+
+        <NavItems
+          sections={dataMenu.sections}
+          bg={dataRestaurant.webSettings.navBackgroundColour}
+          id={accordionId}
+        />
+
+        {dataMenu.sections.map((section) => (
+          <Accordion setAccordionId={setAccordionId} /* ref={ref} */ key={section.id} id={section.id} title={section.name} data={section.items} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+// https://cdn-dev.preoday.com/challenge/venue/9
+// https://cdn-dev.preoday.com/challenge/menu

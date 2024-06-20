@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-import { Item } from '@/app/page';
 import { Modal } from '..';
+import { IItem } from '@/services/interfaces';
 
 interface ModalItemProps {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean | ((value: boolean) => boolean)) => void;
-  item: Item;
+  item: IItem;
 }
 
 export function ModalItem({ isModalOpen, setIsModalOpen, item }: ModalItemProps) {
