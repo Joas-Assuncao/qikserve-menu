@@ -15,7 +15,7 @@ export function Modal({ isModalOpen, children, setIsModalOpen, bg, className }: 
       return 'hidden';
     }
 
-    return className + ' ' + 'block absolute w-full h-screen top-0 left-0 bg-black bg-opacity-70 z-10 flex flex-col justify-evenly items-center';
+    return `${className ? `${className} ` : ''}block fixed w-full h-screen top-0 left-0 bg-black bg-opacity-70 z-10 flex flex-col justify-evenly items-center`;
   }, [isModalOpen]);
 
   if (!isModalOpen) {
@@ -26,12 +26,12 @@ export function Modal({ isModalOpen, children, setIsModalOpen, bg, className }: 
     <div className={classNameMemo}>
       <div className='flex flex-1 flex-col justify-evenly items-center relative w-full h-full'>
         <div
-          className="CLOSE-ICON absolute right-4 top-4 lg:right-2 lg:top-2 cursor-pointer"
+          className="CLOSE-ICON absolute right-4 top-4 max-lg:right-2 max-lg:top-2 cursor-pointer"
           onClick={() => setIsModalOpen((prev) => !prev)}
         >
           <CloseIcon primaryColor={bg} />
         </div>
-        <div>
+        <div className='bg-white overflow-y-auto pb-4'>
           {children}
         </div>
       </div>

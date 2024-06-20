@@ -1,8 +1,9 @@
-import { Section } from '@/app/page';
+
+import { ISection } from '@/services/interfaces';
 import Image from 'next/image';
 
 interface NavItemsProps {
-  sections: Section[];
+  sections: ISection[];
   id: number;
   bg: string;
 }

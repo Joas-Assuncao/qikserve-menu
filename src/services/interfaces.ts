@@ -57,7 +57,7 @@ export interface IMenu {
   sections: ISection[];
 }
 
-export interface IBurgerRestaurant {
+export interface IRestaurant {
   id: number;
   name: string;
   internalName: string;

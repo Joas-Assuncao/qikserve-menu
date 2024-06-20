@@ -1,19 +1,21 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import { ModalItem } from '@/components/Modal/ModalItem';
+import { RestaurantContext } from '@/contexts/RestaurantContext';
 import { IItem } from '@/services/interfaces';
+import { formatPrice } from '@/utils/formatPRice';
 
 const MAX_DESCRIPTION_LENGTH = 60;
 
 export function AccordionItem({ data, isOpen }: { data: IItem; isOpen: boolean; }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { restaurant } = useContext(RestaurantContext);
+  const [isModalOpen, setIsModalOpen] = useState(true);
 
-  const formatPrice = useMemo(() => {
-    const currency = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-    return currency.format(data.price);
+  const formattedPrice = useMemo(() => {
+    return formatPrice(data.price);
   }, []);
 
   return (
@@ -28,7 +30,7 @@ export function AccordionItem({ data, isOpen }: { data: IItem; isOpen: boolean; 
             {data.description && <span className='font-light'>
               {data.description?.length > MAX_DESCRIPTION_LENGTH ? `${data.description.slice(0, MAX_DESCRIPTION_LENGTH - 1)}...` : data.description}
             </span>}
-            <strong className='font-medium'>{formatPrice}</strong>
+            <strong className='font-medium'>{formattedPrice}</strong>
           </div>
 
           {
@@ -44,7 +46,12 @@ export function AccordionItem({ data, isOpen }: { data: IItem; isOpen: boolean; 
             </div>}
         </div>)
       }
-      <ModalItem item={data} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <ModalItem
+        item={data}
+        bg={restaurant?.webSettings?.navBackgroundColour}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </>
   );
 }

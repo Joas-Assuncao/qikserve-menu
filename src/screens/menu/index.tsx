@@ -1,22 +1,28 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { Accordion } from '@/components/Accordion';
 import { Input } from '@/components/Input';
 import { NavItems } from '@/components/NavItems';
-import { IBurgerRestaurant, IMenu } from '@/services/interfaces';
+import { IRestaurant, IMenu } from '@/services/interfaces';
+import { RestaurantContext } from '@/contexts/RestaurantContext';
 
 interface IMenuPageProps {
   dataMenu: IMenu;
-  dataRestaurant: IBurgerRestaurant;
+  dataRestaurant: IRestaurant;
 }
 
 export function Menu({ dataMenu, dataRestaurant }: IMenuPageProps) {
   // const ref = useRef<HTMLDivElement | null>(null);
-
+  const { setMenu, setRestaurant } = useContext(RestaurantContext);
   const [accordionId, setAccordionId] = useState(0);
+
+  useEffect(() => {
+    setMenu(dataMenu);
+    setRestaurant(dataRestaurant);
+  }, []);
 
   return (
     <>

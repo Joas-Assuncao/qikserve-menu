@@ -1,4 +1,4 @@
-import { IBurgerRestaurant } from './interfaces';
+import { IRestaurant } from './interfaces';
 
 const baseÙRL = 'https://cdn-dev.preoday.com/challenge';
 

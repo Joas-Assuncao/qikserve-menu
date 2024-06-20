@@ -1,8 +1,8 @@
 import api from './api';
-import { IBurgerRestaurant, IMenu } from './interfaces';
+import { IRestaurant, IMenu } from './interfaces';
 
 export const getRestaurantData = async () => {
-  const response = await api().get<IBurgerRestaurant>('/venue/9');
+  const response = await api().get<IRestaurant>('/venue/9');
   return response.data;
 }
 
